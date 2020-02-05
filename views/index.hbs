@@ -1,0 +1,9 @@
+<h3>Welcome One and All to the Magical Creatures Website</h3>
+
+<p>This is a website</p>
+<ul>
+
+{{#each creatures}}
+  <li> <a href="/creatures/{{this.name}}">{{this.name}}</a></li>
+{{/each}}
+</ul>
