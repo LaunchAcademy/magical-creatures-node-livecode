@@ -1,10 +1,10 @@
 const createError = require("http-errors")
 const express = require("express")
 const path = require("path")
+const fs = require("fs")
 const logger = require("morgan")
 const bodyParser = require("body-parser")
 const expressSession = require("express-session")
-const fs = require("fs")
 const flash = require("flash")
 const hbsMiddleware = require("express-handlebars")
 
@@ -21,6 +21,7 @@ app.engine(
     defaultLayout: "default",
     extname: ".hbs"
   })
+  
 )
 app.set("view engine", "hbs")
 
