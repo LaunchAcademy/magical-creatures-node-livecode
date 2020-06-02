@@ -11,7 +11,6 @@ const hbsMiddleware = require("express-handlebars")
 const app = express()
 
 const dataPath = path.join(__dirname, "../data.csv")
-const fields = ["title", "url", "description"]
 
 // view engine setup
 app.set("views", path.join(__dirname, "../views"))
@@ -48,9 +47,55 @@ app.use(express.static(path.join(__dirname, "../public")))
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //your code below
+const creaturesPath = path.join(__dirname, "../creatures.json")
+
+const getCreatures = () => {
+  let fileContents = fs.readFileSync(creaturesPath.toString())
+  if (fileContents.length > 0){
+    return JSON.parse(fileContents)
+  } else {
+    return new Array
+  }
+}
 
 app.get("/", (req, res) => {
-  res.send("HI")
+  res.redirect("/creatures")
 })
+
+app.get("/creatures", (req,res)=>{
+  res.render("index", {creatures: getCreatures()})
+})
+
+app.get("/creatures/new", (req, res) => {
+  res.render("new")
+})
+
+app.get("/creatures/:creature", (req,res) =>{
+  debugger
+  let creatures = getCreatures();
+  let creature = creatures.find(creature => {
+    return creature.name === req.params.creature
+  })
+
+  if (creature) {
+    debugger
+    res.render("show", {creature:creature})
+  } else {
+    res.status(404).send("No Creature of that type")
+  }
+})
+
+app.post("/creatures", (req,res) =>{
+  let creature = {
+    name:req.body.name,
+    ability: req.body.ability,
+    age: req.body.age
+  }
+  let creatures = getCreatures()
+  creatures.push(creature)
+  fs.writeFileSync(creaturesPath, JSON.stringify(creatures))
+  res.render("index", {creatures:creatures})
+})
+
 
 module.exports = app
