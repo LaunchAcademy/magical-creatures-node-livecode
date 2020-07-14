@@ -1,0 +1,13 @@
+<h1>Welcome One and All to the Magical Creatures Website!</h1>
+
+<p>Below the header is a short paragraph description of the website, which you can make up yourself!</p>
+
+<img
+  src="https://64.media.tumblr.com/22efea84d9f28695f1d761db8dab2878/8bd424ffa3a9169b-ab/s500x750/14a6ba438f610ac7760a0ea1a2d1b9bfd9d63e61.jpg"
+  alt="managarie">
+
+<ul>
+  {{#each creatures}}
+  <li> <a href="/creatures/{{this.name}}">{{this.name}}</a> </li>
+  {{/each}}
+</ul>
